@@ -1,8 +1,11 @@
 name: Pull Issue Manager
-description: >- 
-  This plugin has 2 features wrapped into it. The first should be used on an issue labeled event, in which you can define a set of labels to act upon.
-  If the event is an issue being labelled, this will add your code template with info from the issue into the comments.
-  The second action, if setup, is for branch pushes. If it sees a certain tag in the commit (which should exist in your code template) it will move the issue to the specified ZenHub pipeline.
+description: >-
+  This plugin has 2 features wrapped into it. The first should be used on an
+  issue labeled event, in which you can define a set of labels to act upon. If
+  the event is an issue being labelled, this will add your code template with
+  info from the issue into the comments. The second action, if setup, is for
+  branch pushes. If it sees a certain tag in the commit (which should exist in
+  your code template) it will move the issue to the specified ZenHub pipeline.
 runs:
   using: node12
   main: dist/index.js
@@ -11,10 +14,16 @@ branding:
   color: gray-dark
 inputs:
   codetemplate:
-    description: The code to be inserted in the comment on this event. Please see the README for how to use templates.
+    description: >-
+      The code to be inserted in the comment on this event. Please see the
+      README for how to use templates. You can use <ISSUE_ID> or <BRANCH_NAME>
+      in your codetemplate which will be replaced with the issue number, and the
+      issue title (in normalized fashion).
     required: true
   progresstag:
-    description: A tag to look for in the push commits - if found, the push event action will move the issue to the specified ZenHub pipeline
+    description: >-
+      A tag to look for in the push commits - if found, the push event action
+      will move the issue to the specified ZenHub pipeline
     required: true
     default: \#started
   zhapikey:
@@ -24,4 +33,9 @@ inputs:
     description: >-
       The ZenHub Pipeline name you want to move linked issues under during this
       action.
+    required: true
+  zhfrompipelines:
+    description: >-
+      A comma separated list of the pipeline names valid to move from.
+      Otherwise, every push may try and move pipelines
     required: true
